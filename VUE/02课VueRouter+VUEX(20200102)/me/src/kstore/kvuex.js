@@ -1,4 +1,3 @@
-/* eslint-disable*/
 // 保存构造函数引用，避免import
 let Vue;
 
@@ -8,26 +7,6 @@ class Store {
     this._mutations = options.mutations;
     this._actions = options.actions;
 
-    this.getGetters=options.getters;
-
-    const computed={}
-    this.getters={}
-    const store=this
-    Object.keys(this.getGetters).forEach(key=>{
-      const fn=store.getGetters[key]
-
-      //
-      computed[key]=function(){
-        return fn(store.state)
-      }
-
-      Object.defineProperty(store.getters,key,{
-        get:()=>{
-          console.log('vm',store._vm)
-          return store._vm[key]
-        }
-      })
-    })
     // 响应化处理state
     // this.state = new Vue({
     //   data: options.state
@@ -36,8 +15,7 @@ class Store {
       data: {
         // 加两个$，Vue不做代理
         $$state: options.state
-      },
-      computed
+      }
     })
 
     // 绑定commit、dispatch的上下文问store实例

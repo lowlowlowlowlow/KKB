@@ -1,6 +1,6 @@
 import Link from './krouter-link'
 import View from './krouter-view'
-
+/* eslint-disable */
 let Vue;
 
 // 1.实现一个插件：挂载$router
@@ -8,18 +8,18 @@ let Vue;
 class KVueRouter {
   constructor(options) {
     this.$options = options
-    console.log(this.$options);
-    
-    //const routes=options.$router
+    console.log('options',this.$options.routes);
 
     // 需要创建响应式的current属性
     // 利用Vue提供的defineReactive做响应化
     // 这样将来current变化的时候，依赖的组件会重新render
     //Vue.util.defineReactive(this, 'current', '/')
-    this.current=window.location.hash.slice(1) || '/'
-    Vue.util.defineReactive(this,'matchedList',[])
 
-    this.match();
+    this.current=window.location.hash.slice(1) || '/'
+
+    Vue.util.defineReactive(this,'matchedList',[])
+    
+    this.match()
 
     // this.app = new Vue({
     //   data() {
@@ -50,44 +50,22 @@ class KVueRouter {
   }
 
   match(routes){
-    routes=routes || this.$options.routes
-
-    // routes.forEach(aRoute=>{
-    //   if(aRoute.path==='/' && this.current ==='/'){
-    //       this.matchedList.push(aRoute)
-    //   }
-
-    //   if(aRoute.path!=='/' && this.current.indexOf(aRoute.path)>-1){
-    //     this.matchedList.push(aRoute)
-    //     if(aRoute.children){
-
-    //       this.match(aRoute.children)
-          
-    //     }
-    //     return
-    //   }
-    // })
-
-    for(const aRoute of routes){
-        if(aRoute.path==='/' && this.current ==='/'){
+    const store=this
+    let thisRoutes = routes || this.$options.routes
+    thisRoutes.forEach((aRoute)=>{
+        console.log('a',aRoute)
+        console.log('cur',store.current)
+        if(aRoute.path===store.current){
+          this.matchedList.push(store.current)
+          return
+        }else if(aRoute.path!==store.current && store.current.indexOf(aRoute.path)>-1){
           this.matchedList.push(aRoute)
-          return 
-      }
-
-      if(aRoute.path!=='/' && this.current.indexOf(aRoute.path)>-1){
-        this.matchedList.push(aRoute)
-        if(aRoute.children){
-
-          this.match(aRoute.children)
-          
+          if(aRoute.children){
+            this.match(aRoute.children)
+          }
+          return
         }
-        return
-      }
-      console.log('matchlist',this.matchedList)
-    }
-    
-
-    
+    })
   }
 }
 

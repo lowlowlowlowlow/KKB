@@ -1,32 +1,31 @@
-/* eslint-disable */
+/* eslint-disable*/
 export default {
-  
   render(h) {
     //获取path对应的component
     const {routeMap, current} = this.$router;
-    //console.log(routeMap,current);
-    console.log(this.$router)
-    //render函数返回一个vnode，所以可以理由this.$vnode获取其内容
-    
+    console.log(routeMap,current);
+
     this.$vnode.data.isView=true;
 
-    let viewDepth = 0;
+    let depth=0
+    let parent=this.$parent;
 
-    let parent = this.$parent;
-
-    console.log('vnode.data',this.$vnode.data)
     while(parent){
-      if(parent.$vnode && parent.$vnode.data){
-        if(parent.$vnode.data.isView){
-          viewDepth++
+      const vnodeData=parent.$vnode && parent.$vnode.data
+      if(vnodeData){
+        if(vnodeData.isView){
+          depth++
         }
       }
       parent=parent.$parent
+      //console.log(depth)
     }
     
+    let component =  null;
     // const component = routeMap[current].component || null;
-    const component =  null;
-    const thisRoute=this.$router.matchedList[viewDepth]
+        //console.log(this.$router.matchedList)
+    const thisRoute=this.$router.matchedList[depth]
+
     if(thisRoute){
       component=thisRoute.component
     }

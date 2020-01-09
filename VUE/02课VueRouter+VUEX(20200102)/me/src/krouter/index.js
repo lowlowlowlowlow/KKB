@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from './kvue-router'
 import Home from '../views/Home.vue'
+import Info from '../views/Info.vue'
 
 // 1.应用插件
 Vue.use(VueRouter)
@@ -22,11 +23,7 @@ const routes = [
       {
         path:'/about/info',
         name:'info',
-        component:{
-          render(h){
-            return h('div','info')
-          }
-        }
+        component:Info
       }
     ]
   }
