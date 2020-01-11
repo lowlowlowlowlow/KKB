@@ -17,6 +17,9 @@ class KVueRouter {
     // 这样将来current变化的时候，依赖的组件会重新render
     //Vue.util.defineReactive(this, 'current', '/')
     this.current=window.location.hash.slice(1) || '/'
+
+
+    //多重路由的时候，需要响应化一个路由表
     Vue.util.defineReactive(this,'matchedList',[])
 
     this.match();
@@ -45,12 +48,16 @@ class KVueRouter {
     console.log(window.location.hash);
 
     this.current = window.location.hash.slice(1)
+
+    //多重路由的时候，路由发生变化需要清空路由表
     this.matchedList=[]
     this.match()
   }
-
+  //制作路由表
   match(routes){
-    routes=routes || this.$options.routes
+    //不传入的时候，下边默认循环所有在router上的路由
+    //有传入的话，则从该级路由开始向下循环找
+    let thisRoutes=routes || this.$options.routes
 
     // routes.forEach(aRoute=>{
     //   if(aRoute.path==='/' && this.current ==='/'){
@@ -68,16 +75,20 @@ class KVueRouter {
     //   }
     // })
 
-    for(const aRoute of routes){
+    for(const aRoute of thisRoutes){
+      //为首页时
         if(aRoute.path==='/' && this.current ==='/'){
           this.matchedList.push(aRoute)
           return 
       }
 
+      //非首页时
       if(aRoute.path!=='/' && this.current.indexOf(aRoute.path)>-1){
         this.matchedList.push(aRoute)
+        //非首页且存在子路由时
         if(aRoute.children){
 
+          //调用自身
           this.match(aRoute.children)
           
         }
@@ -85,9 +96,6 @@ class KVueRouter {
       }
       console.log('matchlist',this.matchedList)
     }
-    
-
-    
   }
 }
 

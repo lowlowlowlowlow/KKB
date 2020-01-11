@@ -5,13 +5,16 @@ export default {
     const {routeMap, current} = this.$router;
     console.log(routeMap,current);
 
+    //判断是否为router-view
     this.$vnode.data.isView=true;
-
+    //计算路由层级
     let depth=0
     let parent=this.$parent;
 
     while(parent){
+      //$vnode只在真实node未存在之前存在，所以console的话会随着真实node出现而消失，console可以看到类似其生命周期
       const vnodeData=parent.$vnode && parent.$vnode.data
+      console.log('vn',vnodeData)
       if(vnodeData){
         if(vnodeData.isView){
           depth++
