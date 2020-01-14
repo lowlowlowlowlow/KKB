@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<script src="../../dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>test</h1>
+        <p>{{foo}}</p>
+        <!-- <comp @bla="onBla"></comp>-->
+    </div>
+    <script>
+        //优先级render>template>el
+        //自身进行调试的时候最常用el:"#app"
+        const app=new Vue({
+            el:"#app",
+            // template:'<div>tem</div>',
+            //template:'#app'
+            // render(h){
+            //     return h('div','render'),
+            // },
+            data:{foo:'foo'}
+        })
+        //使用template必须在app后调用$mount   .$mount("#app")，否则无法显示
+    </script>
+</body>
+</html>
