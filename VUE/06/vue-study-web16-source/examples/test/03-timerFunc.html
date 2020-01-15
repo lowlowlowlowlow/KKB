@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue源码剖析</title>
+    <script src="../../dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="demo">
+        <h1>异步更新</h1>
+        <p id="p1">{{foo}}</p>
+    </div>
+    <script>
+        // 创建实例
+        const app = new Vue({
+            el: '#demo',
+            data: { foo: 'ready~~' },
+            mounted() {
+                //watcher update()了三次
+                //赋值三次，但是只有一个根组件，只进入微任务队列一次。第一次watcher入队，由于是同一个key foo，所以后面几次watcher不再入队
+                //但由于是赋值操作，值是第三次的值
+                //完成其他任务并尝试执行完三次update()之后，清空微任务队列，执行watcher真正的更新方法run()
+                this.foo = Math.random()
+                console.log('1:' + this.foo);
+                this.foo = Math.random()
+                console.log('2:' + this.foo);
+                this.foo = Math.random()
+                console.log('3:' + this.foo);
+                // 异步行为，此时内容没变
+                console.log('p1.innerHTML:' + p1.innerHTML)
+
+                this.$nextTick(() => {
+                    // 这里才是最新的值
+                    console.log('p1.innerHTML:' + p1.innerHTML)
+                })
+            }
+        });
+    </script>
+</body>
+
+</html>
