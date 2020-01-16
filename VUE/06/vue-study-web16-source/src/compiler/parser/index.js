@@ -281,7 +281,7 @@ export function parse (
         inPre = true
       }
 
-      // 关键指令解析
+      // 关键指令解析 v-for v-if等
       if (inVPre) {
         processRawAttrs(element)
       } else if (!element.processed) {
@@ -306,6 +306,7 @@ export function parse (
       }
     },
 
+    //遇到结束标签执行
     end (tag, start, end) {
       const element = stack[stack.length - 1]
       // pop stack
@@ -317,6 +318,7 @@ export function parse (
       closeElement(element)
     },
 
+    //
     chars (text: string, start: number, end: number) {
       if (!currentParent) {
         if (process.env.NODE_ENV !== 'production') {

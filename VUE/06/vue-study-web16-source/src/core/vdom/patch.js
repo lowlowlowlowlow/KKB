@@ -150,7 +150,7 @@ export function createPatchFunction (backend) {
       return
     }
 
-    // 原生标签创建
+    // 原生标签创建,div,p等
     const data = vnode.data
     const children = vnode.children
     const tag = vnode.tag

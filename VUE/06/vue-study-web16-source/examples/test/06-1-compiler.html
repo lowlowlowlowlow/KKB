@@ -10,6 +10,7 @@
 
 <body>
     <div id="demo">
+        <!-- 如果h1没有嵌套，则不会被标记会静态节点，结构太简单-->
         <h1>Vue模板<span>编译</span></h1>
         <p v-if="foo">{{foo}}</p>
         <comp></comp>

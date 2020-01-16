@@ -12,7 +12,7 @@ import { bindObjectListeners } from './bind-object-listeners'
 import { resolveScopedSlots } from './resolve-scoped-slots'
 import { bindDynamicKeys, prependModifier } from './bind-dynamic-keys'
 
-// target是组件实例
+// target是组件实例,说明每一个组件实例都会挂载这些方法
 export function installRenderHelpers (target: any) {
   target._o = markOnce
   target._n = toNumber

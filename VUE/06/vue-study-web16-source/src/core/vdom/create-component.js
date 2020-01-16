@@ -41,16 +41,18 @@ const componentVNodeHooks = {
       !vnode.componentInstance._isDestroyed &&
       vnode.data.keepAlive
     ) {
+      //keep-alive 保持组件生命则不会再创建
       // kept-alive components, treat as a patch
       const mountedNode: any = vnode // work around flow
       componentVNodeHooks.prepatch(mountedNode, mountedNode)
     } else {
       // 创建组件实例
+      //组件的构造函数存在vnode中，虽然没有显示出来，但可以直接用
       const child = vnode.componentInstance = createComponentInstanceForVnode(
         vnode,
         activeInstance
       )
-      // 创建完成并挂载
+      // 创建完成并挂载 render\update\watcher执行,把计算出来的虚拟dom变成真实dom
       child.$mount(hydrating ? vnode.elm : undefined, hydrating)
     }
   },
@@ -234,6 +236,7 @@ export function createComponentInstanceForVnode (
 // 合并操作：用户也可能传递钩子，所以会整合
 function installComponentHooks (data: VNodeData) {
   const hooks = data.hook || (data.hook = {})
+  //hookToMerge 默认的钩子
   for (let i = 0; i < hooksToMerge.length; i++) {
     const key = hooksToMerge[i]
     const existing = hooks[key]

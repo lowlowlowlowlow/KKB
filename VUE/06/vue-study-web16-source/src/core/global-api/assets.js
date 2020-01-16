@@ -23,6 +23,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
           validateComponentName(id)
         }
         // def是对象
+        // Vue.component('comp', {data(){}})
         if (type === 'component' && isPlainObject(definition)) {
           // 定义组件name
           definition.name = definition.name || id
@@ -35,6 +36,9 @@ export function initAssetRegisters (Vue: GlobalAPI) {
         }
 
         // 注册 this.options[components][comp]=Ctor
+        //在全局component里面注册了一个组件comp,赋值其构造函数
+        //this.options[type + 's']=this.components[comp]=definition
+        //即keep-alive等组件方法都放在组件的原型里面，根组件component继承了原型，所以我们的自定义组件也可以去用
         this.options[type + 's'][id] = definition
         return definition
       }

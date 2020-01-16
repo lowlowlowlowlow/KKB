@@ -5,6 +5,7 @@ import { isObject, isDef, hasSymbol } from 'core/util/index'
 /**
  * Runtime helper for rendering v-for lists.
  */
+//第二个参数render
 export function renderList (
   val: any,
   render: (
@@ -13,6 +14,7 @@ export function renderList (
     index?: number
   ) => VNode
 ): ?Array<VNode> {
+  //实际上是对传进来的参数render进行for循环，放进ret数组
   let ret: ?Array<VNode>, i, l, keys, key
   if (Array.isArray(val) || typeof val === 'string') {
     ret = new Array(val.length)
