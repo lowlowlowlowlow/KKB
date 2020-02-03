@@ -25,7 +25,7 @@ server.get('/', (req, res) => {
       }
     },
   })
-  //由于是一个异步操作，即先get再执行render，所以需要用promise.then()来进行
+
   // 3.用渲染器渲染vue实例
   renderer.renderToString(app).then(html => {
     res.send(html)

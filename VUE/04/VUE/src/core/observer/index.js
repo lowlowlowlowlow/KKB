@@ -34,7 +34,7 @@ export function toggleObserving (value: boolean) {
  * object's property keys into getter/setters that
  * collect dependencies and dispatch updates.
  */
-//每一个响应式的对象（函数，对象）都会有一个ob，普通值不会有
+//每一个响应式的对象（数组，对象）都会有一个ob，普通值不会有
 export class Observer {
   value: any;
   dep: Dep;

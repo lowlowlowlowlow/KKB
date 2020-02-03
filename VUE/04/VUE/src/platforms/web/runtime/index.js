@@ -38,7 +38,7 @@ Vue.prototype.__patch__ = inBrowser ? patch : noop
 // public mount method
 //实现$mount
 //template执行$mount的时候，会使用.$mount("#app")
-//#app代表传入了一个el数组
+//使用选择器#app传入，则代表传入了一个el数组
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean

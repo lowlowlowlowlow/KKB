@@ -28,7 +28,7 @@ const weexFactoryPlugin = {
 const aliases = require('./alias')
 const resolve = p => {
   //发现传入的p会被截取，第0位是基地址
-  //由aliases[base]可以知道从'./alias'中查找
+  //由aliases[base]可以知道从'./alias'中查找到web对应的内容
   //发现web是web: resolve('src/platforms/web'),
   const base = p.split('/')[0]
   if (aliases[base]) {

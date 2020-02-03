@@ -1,10 +1,11 @@
+//Vue构造函数
 import Vue from './instance/index'
 import { initGlobalAPI } from './global-api/index'
 import { isServerRendering } from 'core/util/env'
 import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
 
 //定义全局api
-//传递Vue是因为需要在Vue身上做一些静态挂载  Vue.xxx
+//传递Vue构造函数是因为需要在Vue身上做一些静态挂载  Vue.xxx
 initGlobalAPI(Vue)
 
 Object.defineProperty(Vue.prototype, '$isServer', {

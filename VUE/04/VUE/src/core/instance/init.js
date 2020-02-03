@@ -13,7 +13,7 @@ import { extend, mergeOptions, formatComponentName } from '../util/index'
 let uid = 0
 
 export function initMixin (Vue: Class<Component>) {
-  //给Vue的prototype上添加_init(原型方法、实例方法)
+  //给Vue的prototype上添加_init(原型方法、实例方法),将用户传进来的options进行处理
   //？表示参数可选
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
@@ -53,12 +53,12 @@ export function initMixin (Vue: Class<Component>) {
     }
     // expose real self
     vm._self = vm
-    initLifecycle(vm)   //$parent,$root,$children,$refs
+    initLifecycle(vm)   //$parent,$root,$children,$refs 跟生命周期相关的属性的设置
     initEvents(vm)  //处理（添加监听）父组件传递的事件和回调
-    initRender(vm)  //$slots,$scopedSlots,_c,$createElement
+    initRender(vm)  //$slots,$scopedSlots,_c,$createElement 跟虚拟dom相关的内容
     callHook(vm, 'beforeCreate')   //可以使用$parent\$slot等
     //inject在provide之前的原因
-    //1 来自祖辈的数据将来要挂载到子组件里面，要和子组件本身的数据进行判重
+    //1 来自祖辈的数据将来要挂载到子组件里面，要和子组件本身(当前组件)的数据进行判重
     //2 祖辈的数据有可能再进行操作提供给别的使用
     //注入数据(注入的数据不会做响应式)
     initInjections(vm) // resolve injections before data/props

@@ -68,7 +68,7 @@ if (inBrowser && !isIE) {
 /**
  * Flush both queues and run the watchers.
  */
-//真正刷新队列的函数
+//真正刷新队列的函数（执行完宏任务和其微任务之后的刷新）
 function flushSchedulerQueue () {
   currentFlushTimestamp = getNow()
   flushing = true
@@ -94,7 +94,7 @@ function flushSchedulerQueue () {
     }
     id = watcher.id
     has[id] = null
-    //执行watcher的run方法
+    //执行watcher的run方法（更新虚拟dom，可以获得新老虚拟dom，对比新旧虚拟dom，得出最有效的更新方法）
     watcher.run()
     // in dev build, check and stop circular updates.
     if (process.env.NODE_ENV !== 'production' && has[id] != null) {

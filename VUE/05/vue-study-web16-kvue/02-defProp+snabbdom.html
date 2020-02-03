@@ -42,6 +42,7 @@
     }
 
     // 使用虚拟dom做更新
+    //patch中的vnode是上一次计算的虚拟dom，所以可以对比新旧两个虚拟dom，得出最少的dom操作
     function update() {
       vnode = patch(vnode, h('div#app', {style:{color:'red'}},obj.foo))
     }

@@ -34,11 +34,11 @@ Vue.prototype.$mount = function (
   //解析options
   const options = this.$options
   // resolve template/el and convert to render function
-  //如果没有render（也就是说有render的话这里面的函数都不会执行）
+  //如果没有render（也就是说有render函数的话这里面的函数都不会执行）
   if (!options.render) {
     let template = options.template
     //次优先级是template
-    //模板解析
+    //如果存在template,模板解析
     if (template) {
       //判断是否为字符串
       if (typeof template === 'string') {
@@ -62,15 +62,16 @@ Vue.prototype.$mount = function (
         return this
       }
     } else if (el) {
+      //如果不存在template，则el作为template
       template = getOuterHTML(el)
     }
-    //如果存在模板，执行编译
+    //如果存在模板，执行编译（无论是el还是template，最终都是要生成render函数执行挂载）
     if (template) {
       /* istanbul ignore if */
       if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
         mark('compile')
       }
-      //编译得到渲染函数
+      //*************编译是为了得到渲染函数
       const { render, staticRenderFns } = compileToFunctions(template, {
         outputSourceRange: process.env.NODE_ENV !== 'production',
         shouldDecodeNewlines,

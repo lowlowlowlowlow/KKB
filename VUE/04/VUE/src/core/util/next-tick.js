@@ -10,6 +10,7 @@ export let isUsingMicroTask = false
 const callbacks = []
 let pending = false
 
+//执行完一个宏任务之后的页面刷新函数
 function flushCallbacks () {
   pending = false
   const copies = callbacks.slice(0)
@@ -41,6 +42,7 @@ let timerFunc
 /* istanbul ignore next, $flow-disable-line */
 if (typeof Promise !== 'undefined' && isNative(Promise)) {
   const p = Promise.resolve()
+  //此处有promise.then()，启动微任务
   timerFunc = () => {
     p.then(flushCallbacks)
     // In problematic UIWebViews, Promise.then doesn't completely break, but
@@ -99,6 +101,7 @@ export function nextTick (cb?: Function, ctx?: Object) {
   })
   if (!pending) {
     pending = true
+    //证明是异步函数
     timerFunc()
   }
   // $flow-disable-line

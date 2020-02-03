@@ -15,6 +15,7 @@ export function initEvents (vm: Component) {
   // init parent attached events
   //获取父组件上的已经注册的监听器
   const listeners = vm.$options._parentListeners
+  //如果父组件已经注册的监听器存在
   if (listeners) {
     //在自己(子组件)里面再派发监听
     //从此可以知道“谁派发谁监听”
