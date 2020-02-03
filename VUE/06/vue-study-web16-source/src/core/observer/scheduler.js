@@ -94,6 +94,7 @@ function flushSchedulerQueue () {
     }
     id = watcher.id
     has[id] = null
+    //执行flushSchedulerQueue方法的其中一个重要步骤是执行watcher中的run方法
     //执行watcher的run方法（更新虚拟dom，可以获得新老虚拟dom，对比新旧虚拟dom，得出最有效的更新方法）
     watcher.run()
     // in dev build, check and stop circular updates.
@@ -170,9 +171,11 @@ export function queueWatcher (watcher: Watcher) {
   // id去重，不存在才入队
   if (has[id] == null) {
     has[id] = true
+    //如果还没有刷新，该watcher入队
     if (!flushing) {
       queue.push(watcher)
     } else {
+      //如果刷新了，就弹出该watcher
       // if already flushing, splice the watcher based on its id
       // if already past its id, it will be run next immediately.
       let i = queue.length - 1
@@ -182,6 +185,7 @@ export function queueWatcher (watcher: Watcher) {
       queue.splice(i + 1, 0, watcher)
     }
     // queue the flush
+    //异步的情况下(不需要等待)
     if (!waiting) {
       waiting = true
 
@@ -189,7 +193,8 @@ export function queueWatcher (watcher: Watcher) {
         flushSchedulerQueue()
         return
       }
-      // 异步刷新队列
+      // 异步刷新队列，进入nextTick
+      //flushSchedulerQueue 循环执行其内部queue的watcher
       nextTick(flushSchedulerQueue)
     }
   }

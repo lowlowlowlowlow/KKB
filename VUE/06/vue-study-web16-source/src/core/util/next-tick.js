@@ -10,6 +10,7 @@ export let isUsingMicroTask = false
 const callbacks = []
 let pending = false
 
+//（清空）执行微任务
 function flushCallbacks () {
   pending = false
   const copies = callbacks.slice(0)
@@ -42,8 +43,10 @@ let timerFunc
 /* istanbul ignore next, $flow-disable-line */
 if (typeof Promise !== 'undefined' && isNative(Promise)) {
   const p = Promise.resolve()
+  //定义成异步函数
   timerFunc = () => {
     //启动promise.then()(实际上启动了一个微任务，将所有watcher刷新)
+    //进入flushCallbacks
     p.then(flushCallbacks)
     // In problematic UIWebViews, Promise.then doesn't completely break, but
     // it can get stuck in a weird state where callbacks are pushed into the
@@ -90,6 +93,8 @@ export function nextTick (cb?: Function, ctx?: Object) {
   let _resolve
   //将回调函数push进回调函数数组
   callbacks.push(() => {
+    //第一次是传入的cb，然后下方会执行if(!pending)的判断
+    //flushCallbacks里的copies轮流执行，执行完一次copies则会再进入到nextTick，所以第一次以外的cb都是flushCallbacks里的copies
     if (cb) {
       try {
         cb.call(ctx)
@@ -100,9 +105,11 @@ export function nextTick (cb?: Function, ctx?: Object) {
       _resolve(ctx)
     }
   })
+
+  //初次进入时，不存在阻塞，走这个判断并执行timerFunc
   if (!pending) {
     pending = true
-    // 异步函数
+    //开始异步函数
     timerFunc()
   }
   // $flow-disable-line

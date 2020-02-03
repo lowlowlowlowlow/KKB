@@ -65,9 +65,11 @@ export function lifecycleMixin (Vue: Class<Component>) {
     // Vue.prototype.__patch__ is injected in entry points
     // based on the rendering backend used.
     if (!prevVnode) {
+      //如果没有旧的虚拟dom，则传入vm.$el，即当前的真实dom
       // initial render
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
     } else {
+      //如果有旧的虚拟dom
       // updates
       vm.$el = vm.__patch__(prevVnode, vnode)
     }

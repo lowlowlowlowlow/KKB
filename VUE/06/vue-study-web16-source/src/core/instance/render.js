@@ -71,6 +71,7 @@ export function renderMixin (Vue: Class<Component>) {
 
   Vue.prototype._render = function (): VNode {
     const vm: Component = this
+    //从$options获得render函数
     const { render, _parentVnode } = vm.$options
 
     if (_parentVnode) {
@@ -91,7 +92,8 @@ export function renderMixin (Vue: Class<Component>) {
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm
-      //  vm.$createElement就是h
+      
+      //call执行render函数  vm.$createElement就是h
       //console.log可以看出vnode有children.data等，是一棵树
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
@@ -129,6 +131,7 @@ export function renderMixin (Vue: Class<Component>) {
     }
     // set parent
     vnode.parent = _parentVnode
+    //最后返回虚拟dom，说明render.js的作用是计算出一个最新的虚拟dom
     return vnode
   }
 }

@@ -751,7 +751,7 @@ export function createPatchFunction (backend) {
   // 为什么返回patch
   //为了跨平台，回传一个平台相关的通用方法
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
-    // 如果新的虚拟dom树不存在，则删除
+    // 如果新的虚拟dom树不存在，则删除invokeDestroyHook
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
@@ -772,10 +772,12 @@ export function createPatchFunction (backend) {
       const isRealElement = isDef(oldVnode.nodeType)
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
-        // 存在新旧vdom，执行diff
+        // 存在新旧vdom，执行diff（patchVnode方法）
         patchVnode(oldVnode, vnode, insertedVnodeQueue, null, null, removeOnly)
       } else {
-        // 初始化过程，创建新dom树，追加到body，删除宿主元素
+        // 初始化过程，不存在旧的虚拟dom，只存在真实dom
+        // 创建新dom树，追加到body，删除宿主元素
+        // 初始化时是追加而不是替换操作的原因：初始化本来是什么都没有，不需要进行对比，然后一次性创建完一颗新树再一次追加，效率比较高
         if (isRealElement) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
@@ -805,7 +807,9 @@ export function createPatchFunction (backend) {
         }
 
         // replacing existing element
+        //oldVnode.elm为宿主元素本身
         const oldElm = oldVnode.elm
+        //parentElm为宿主元素的父元素
         const parentElm = nodeOps.parentNode(oldElm)
 
         // create new node

@@ -98,8 +98,8 @@ export default class Watcher {
   /**
    * Evaluate the getter, and re-collect dependencies.
    */
-  //把watcher创新时传进来的更新函数调用一下
 
+  //负责把watcher创建时传进来的更新函数调用一下
   get () {
     pushTarget(this)
     let value
@@ -163,6 +163,7 @@ export default class Watcher {
    * Subscriber interface.
    * Will be called when a dependency changes.
    */
+  //主要负责watcher入队列，并不是真正的更新，run()才重新计算虚拟dom
   update () {
     /* istanbul ignore else */
     if (this.lazy) {
@@ -170,6 +171,7 @@ export default class Watcher {
     } else if (this.sync) {
       this.run()
     } else {
+      //异步情况下多执行这一步，watcher入队列
       queueWatcher(this)
     }
   }
@@ -182,8 +184,8 @@ export default class Watcher {
   //重新计算了虚拟DOM
   run () {
     if (this.active) {
-      //如果当前watcher是用户定义的观察表达式$watch，则value有值
-      //如果是组件渲染的更新函数（componentUpdate之类）则无值
+      //如果当前watcher是用户定义的观察表达式$watch，则value有值，表达式执行完后会有新的值
+      //如果是组件渲染的更新函数（componentUpdate之类）则无值，无返回，render级别的watcher
       const value = this.get()
       if (
         value !== this.value ||
