@@ -105,7 +105,7 @@ const hooksToMerge = Object.keys(componentVNodeHooks)
 
 // 创建自定义组件VNode实例的地方
 export function createComponent (
-  Ctor: Class<Component> | Function | Object | void,
+  Ctor: Class<Component> | Function | Object | void, //构造函数
   data: ?VNodeData,
   context: Component,
   children: ?Array<VNode>,
@@ -196,7 +196,7 @@ export function createComponent (
 
   // return a placeholder vnode
   const name = Ctor.options.name || tag
-  // 定义组件名称
+  // 定义组件名称 'vue-component-XXX'
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
     data, undefined, undefined, undefined, context,

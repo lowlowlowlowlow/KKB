@@ -22,12 +22,12 @@ export function initAssetRegisters (Vue: GlobalAPI) {
         if (process.env.NODE_ENV !== 'production' && type === 'component') {
           validateComponentName(id)
         }
-        // def是对象
+        // definition是对象
         // Vue.component('comp', {data(){}})
         if (type === 'component' && isPlainObject(definition)) {
           // 定义组件name
           definition.name = definition.name || id
-          // extend创建组件构造函数，def变成了构造函数
+          // extend创建组件构造函数，definition变成了构造函数
           definition = this.options._base.extend(definition)
         }
 

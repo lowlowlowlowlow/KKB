@@ -67,7 +67,7 @@ Vue.prototype.$mount = function (
         mark('compile')
       }
 
-      // 编译得到渲染函数
+      // 编译得到渲染函数 template为用户传入的字符串模板，compileToFunctions之后成为render
       const { render, staticRenderFns } = compileToFunctions(template, {
         outputSourceRange: process.env.NODE_ENV !== 'production',
         shouldDecodeNewlines,
@@ -75,6 +75,7 @@ Vue.prototype.$mount = function (
         delimiters: options.delimiters,
         comments: options.comments
       }, this)
+      //用户需要的render函数
       options.render = render
       options.staticRenderFns = staticRenderFns
 

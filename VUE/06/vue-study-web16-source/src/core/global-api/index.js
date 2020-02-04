@@ -53,6 +53,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
 
   Vue.options = Object.create(null)
   ASSET_TYPES.forEach(type => {
+    //ASSET_TYPES里面包含  'component','directive','filter' 三种type
     // 三个空对象创建
     // Vue.options['components']={}
     //会有components的初始化

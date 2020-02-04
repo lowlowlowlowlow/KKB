@@ -145,7 +145,7 @@ export function createPatchFunction (backend) {
     }
 
     vnode.isRootInsert = !nested // for transition enter check
-    // 如果要创建的是组件，走下面的流程
+    // 执行createEle，如果要创建的是组件，走下面的流程
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
       return
     }
@@ -213,6 +213,7 @@ export function createPatchFunction (backend) {
     }
   }
 
+  //将前面执行的虚拟dom变成真实dom
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     // 获取管理钩子函数
     let i = vnode.data

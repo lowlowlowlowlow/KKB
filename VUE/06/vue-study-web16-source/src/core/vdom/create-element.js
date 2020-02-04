@@ -115,7 +115,7 @@ export function _createElement (
       isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
         // 获取组件构造函数方法，context是组件实例，vm.$options.components.comp
       // component
-      // 自定义组件情况
+      // 自定义组件情况，获取自定义组件的虚拟dom
       vnode = createComponent(Ctor, data, context, children, tag)
     } else {
       // unknown or unlisted namespaced elements
