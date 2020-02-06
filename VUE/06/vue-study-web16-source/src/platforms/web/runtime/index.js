@@ -42,6 +42,7 @@ Vue.prototype.$mount = function (
 ): Component {
   el = el && inBrowser ? query(el) : undefined
   // 初始化，将首次渲染结果替换el
+  //mountComponent返回vm，替换el
   return mountComponent(this, el, hydrating)
 }
 

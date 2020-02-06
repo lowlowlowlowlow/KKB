@@ -107,11 +107,13 @@ class Watcher {
 
     // Dep.target静态属性上设置为当前watcher实例
     Dep.target = this
-    this.vm[this.key] // 读取触发了getter
+    this.vm[this.key] // 读取触发了getter，在getter中发生依赖收集
     Dep.target = null // 收集完就置空
   }
 
   update() {
+    //obj1.(method).call(obj2,argument1,argument2)
+    //如上，call的作用就是把obj1的方法放到obj2上使用，后面的argument1..这些做为参数传入。
     this.updateFn.call(this.vm, this.vm[this.key])
   }
 }

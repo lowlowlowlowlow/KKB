@@ -23,7 +23,7 @@ const arrayProto=Object.create(arrayPro)
 
 //对象响应式
 function defineReactive(obj, key, val) {
-  // 递归
+  // 递归（用于多层的对象或数组）
   observe(val)
   
   // 对传入obj进行访问拦截
