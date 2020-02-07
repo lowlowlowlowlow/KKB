@@ -1,29 +1,18 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "@/views/Home";
+import About from "@/views/About";
 
-Vue.use(VueRouter)
+Vue.use(Router);
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
-
-export default router
+//导出工厂函数（面对多个客户端使用多个路由，每次用户请求都是一个全新的用户，创建新的路由实例，避免相互污染）
+export function createRouter() {
+  return new Router({
+    routes: [
+      { path: "/", component: Home },
+      { path: "/about", component: About }
+    ]
+  });
+}
+{
+//之前export new Router({})是直接输出一个单例
