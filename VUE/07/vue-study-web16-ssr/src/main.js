@@ -9,7 +9,8 @@ import { createStore } from './store/index';
 //服务器端在entry-server中处理
 //确保客户端每个组件如果有asyncData，都要执行）
 //此时从entry-server中返回的$options中检查
-//在entry-client中无法获取$options
+//也可以写在entry-client.js中，必须是不影响首屏加载的地方（也就是可以操作客户端的位置而非服务端的位置）
+//在Vue中加入mixin则说明此Vue实例中的所有组件都会调用这个beforeMount的方法
 Vue.mixin({
   beforeMount() {
     const { asyncData } = this.$options;

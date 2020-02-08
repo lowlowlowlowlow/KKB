@@ -43,8 +43,10 @@ export default context => {
         context.state = store.state;
 
         // 所有异步请求结果全部返回，可以返回vue实例了
+        // resolve(app)有返回vue实例的效果
         resolve(app);
       }).catch(reject)
+      //catch(err=>reject({}))  传递错误信息显示
       
     }, reject);
   });
