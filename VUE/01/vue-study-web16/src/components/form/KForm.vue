@@ -8,6 +8,7 @@
 export default {
   provide() {
     return {
+      //利用provide，返回了一个KForm实例，则使用inject的子组件可以直接引用到对应的父KForm，其model、rules都可以在子组件中取出使用
       form: this
     };
   },

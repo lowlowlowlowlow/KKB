@@ -15,6 +15,7 @@
 import Schema from "async-validator";
 
 export default {
+  //插入了'form',则可以使用this.form.XX来使用在KForm.vue中的内容
   inject: ["form"],
   data() {
     return {
@@ -42,10 +43,11 @@ export default {
       // 当前值
       const value = this.form.model[this.prop];
 
-      // 校验描述对象
+      // 校验规则描述对象
       const desc = { [this.prop]: rules };
-      // 创建Schema实例
+      // 利用校验规则对象创建Schema实例
       const schema = new Schema(desc);
+      //{ [this.prop]: value } 在schema.validate()方法中，首个参数是需要校验的key和其对应的value
       return schema.validate({ [this.prop]: value }, errors => {
         if (errors) {
           this.error = errors[0].message;
