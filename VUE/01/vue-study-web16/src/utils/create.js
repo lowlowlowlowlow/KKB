@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import Notice from '@/components/Notice.vue'
 function create(Component, props) {
   // 组件构造函数如何获取？
   // 1.Vue.extend()
@@ -25,5 +25,14 @@ function create(Component, props) {
   return comp
 
 }
+//未封装$notice的写法
+// export default create
 
-export default create
+//改成插件模式export，curry化应用
+export default {
+  install(Vue) {
+    Vue.prototype.$notice = function (options) {
+      return create(Notice, options)
+    }
+  }
+}

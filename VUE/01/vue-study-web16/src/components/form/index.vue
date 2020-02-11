@@ -25,7 +25,7 @@ import ElementTest from "@/components/form/ElementTest.vue";
 import KInput from "@/components/form/KInput.vue";
 import KFormItem from "@/components/form/KFormItem.vue";
 import KForm from "@/components/form/KForm.vue";
-import Notice from "@/components/Notice.vue";
+// import Notice from "@/components/Notice.vue";
 
 export default {
   data() {
@@ -49,12 +49,22 @@ export default {
   methods: {
     login() {
       this.$refs["loginForm"].validate(valid => {
-        const notice = this.$create(Notice, {
+        //封装$notice之前的写法
+        // const notice = this.$create(Notice, {
+        //   title: "Alert",
+        //   message: valid ? "请求登录!" : "校验失败!",
+        //   duration: 2000
+        // });
+        // notice.show();
+
+        //封装了$notice并在create.js中执行了Vue.prototype.$notice
+        const notice = this.$notice({
           title: "Alert",
           message: valid ? "请求登录!" : "校验失败!",
           duration: 2000
         });
         notice.show();
+
         // if (valid) {
         //   alert("submit");
         // } else {

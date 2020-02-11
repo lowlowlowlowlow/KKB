@@ -10,8 +10,10 @@
 </template>
 
 <script>
+import emitter from '../../mixin/emitter'
   export default {
     inheritAttrs: false, // 设置为false避免设置到根元素上
+    mixin:[emitter],
     props: {
       value: {
         type: String,
@@ -28,7 +30,10 @@
         this.$emit('input', e.target.value)
 
         // 通知父级执行校验
-        this.$parent.$emit('validate')
+        //使用$parent增加了耦合
+       // this.$parent.$emit('validate')
+       // 由于需要使用componentName才能进行dispatch的查找，所以需要在KFormItem里面定义一个componentName进行识别
+       this.dispatch('KFormItem','validate')
       }
     },
   }
