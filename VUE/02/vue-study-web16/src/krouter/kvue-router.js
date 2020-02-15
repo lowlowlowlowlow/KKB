@@ -108,6 +108,7 @@ KVueRouter.install = function (_Vue) {
   Vue.mixin({
     beforeCreate() {
       // 确保根实例的时候才执行
+      //从main.js中可以知道，只有根实例才会在$options中有router
       if (this.$options.router) {
         Vue.prototype.$router = this.$options.router
       }
