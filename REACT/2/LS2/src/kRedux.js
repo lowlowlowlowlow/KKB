@@ -1,6 +1,8 @@
 //本身createStore只接收一个reducer
 //此处在ReduxPage调用时想使用中间件，则我们的kRedux中需要传入多一个参数enhancer,增强了功能
 export function createStore(reducer, enhancer) {
+  //enhancer即applyMiddleware（...middlewares）
+  //由于applyMiddleware函数中返回的是一个加强了的createStore，所以此处返回的即加强的createStore
   if (enhancer) {
     //加强自己，这样就可以加强其身上屙dispatch/subscribe等
     return enhancer(createStore)(reducer);
@@ -10,6 +12,8 @@ export function createStore(reducer, enhancer) {
   function getState() {
     return currentState;
   }
+
+  //dispatch时同时执行有订阅的更新
   function dispatch(action) {
     currentState = reducer(currentState, action);
     // 监听函数是一个数组，那就循环吧
@@ -44,10 +48,14 @@ export function applyMiddleware(...middlewares) {
       getState: store.getState,
       dispatch
     };
-    // 给middleware参数，比如说dispatch。使其可以在middleware函数内部处理dispatch
+   
     const middlewaresChain = middlewares.map(middleware =>
+       // 给middleware参数，比如说dispatch。使其可以在middleware函数内部处理dispatch
       middleware(middleApi)
     );
+    //此时middlewaresChain即允许传入参数的（middleApi）middleware的数组
+
+    //此处的dispatch为轮流执行了middlewaresChain里面的middleware
     dispatch = compose(...middlewaresChain)(dispatch);
 
     //执行加强版的createStore函数之后会返回加强后的store和函数内处理过的dispatch(此处需求是修改dispatch的功能)

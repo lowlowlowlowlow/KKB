@@ -16,6 +16,7 @@ module.exports = {
   outputDir: './dist/'+target,
   configureWebpack: () => ({
     // 将 entry 指向应用程序的 server / client 文件
+    //${target}动态入口
     entry: `./src/entry-${target}.js`,
     // 对 bundle renderer 提供 source map 支持
     devtool: 'source-map',
@@ -26,6 +27,7 @@ module.exports = {
     node: TARGET_NODE ? undefined : false,
     output: {
       // 此处使用Node风格导出模块
+      //服务端则用commonjs2
       libraryTarget: TARGET_NODE ? "commonjs2" : undefined
     },
     // https://webpack.js.org/configuration/externals/#function

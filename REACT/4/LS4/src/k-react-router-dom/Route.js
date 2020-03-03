@@ -10,10 +10,12 @@ import matchPath from "./matchPath";
 export default class Route extends Component {
   render() {
     return (
+      //利用RouterContext.Consumer可以获得从App.js中的BrowserRouter.js中的RouterContxt.Provider传入的数据
       <RouterContext.Consumer>
         {context => {
           const {path, children, component, render} = this.props;
           //使用window.location.pathname不太灵活，可以直接使用上下文中的location即context.location扩大兼容性
+          //优先使用传入的location
           // const match = context.location.pathname === path;
           const location = this.props.location || context.location;
           const match = matchPath(location.pathname, this.props);
@@ -41,7 +43,7 @@ export default class Route extends Component {
                   ? typeof children === "function"
                     ? children(props)
                     // match的时候如果children存在：function或者children本身
-                    //children不是function的情况下则存在路由嵌套
+                    //children不是function而是对象的情况下则存在路由嵌套，需要进入再下一层
                     : children
                   //match的情况下，children不存在，则component优先级第二，判断component
                   : component

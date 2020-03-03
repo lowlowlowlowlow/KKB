@@ -14,6 +14,7 @@ export default class Link extends Component {
           <a
             href={to}
             onClick={event => this.handleClick(event, context.history)}>
+            {/* this.props.children */}
             {children}
           </a>
         )}

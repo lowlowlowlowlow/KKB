@@ -72,7 +72,8 @@ export class Provider extends Component {
   }
 }
 
-//...args相当于传入到单个type里面的所有action
+//...args相当于传入到单个type里面的所有参数，creator相当于action
+//目的在于当creator是对象而不是函数不能直接执行时，为其封装多一层dispatch
 function bindActionCreator(creator, dispatch) {
   return (...args) => dispatch(creator(...args));
 }

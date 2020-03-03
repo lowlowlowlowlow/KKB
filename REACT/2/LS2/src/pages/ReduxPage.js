@@ -3,7 +3,7 @@ import store from "../store/";
 
 export default class ReduxPage extends Component {
   componentDidMount() {
-    // 订阅
+    // 订阅（不订阅的话，数据更新之后，页面不会刷新数据）
     store.subscribe(() => {
       this.forceUpdate();
     });

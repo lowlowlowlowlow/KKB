@@ -5,7 +5,10 @@ import About from "@/views/About";
 
 Vue.use(Router);
 
-//导出工厂函数（面对多个客户端使用多个路由，每次用户请求都是一个全新的用户，创建新的路由实例，避免相互污染）
+//导出工厂函数
+//由于是服务端渲染，所以客户端有多个，每个用户必须要有单独的router（每一次都创建新的router实例）
+//不会相互干扰和污染
+
 export function createRouter() {
   return new Router({
     routes: [

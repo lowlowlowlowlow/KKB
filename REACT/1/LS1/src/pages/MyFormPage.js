@@ -23,6 +23,9 @@ class MyFormPage extends Component {
     return (
       <div>
         <h3>MyFormPage</h3>
+        {/* getFieldDecorator是一个方法，这个方法接收两个参数，
+        第一个是表单的字段对象，第二个是验证规则。
+        这个方法本身返回一个方法，需要将需要获取值的标签包裹进去*/}
         {getFieldDecorator("name", {rules: [nameRules]})(
           <input type="text" placeholder="please input ur name" />
         )}

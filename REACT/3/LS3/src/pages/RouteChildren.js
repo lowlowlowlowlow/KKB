@@ -6,6 +6,7 @@ function ListItemLink({to, name, ...rest}) {
   return (
     <Route
       path={to}
+      //使用children的方式去渲染路由组件
       children={({match}) => (
         <li className={match ? "active" : ""}>
           <Link to={to} {...rest}>
