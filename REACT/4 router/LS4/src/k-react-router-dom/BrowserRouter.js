@@ -26,7 +26,8 @@ export default class BrowserRouter extends Component {
       <RouterContext.Provider
         value={{
           history: this.history,
-          location: this.state.location
+          location: this.state.location,
+          match: BrowserRouter.computeRootMatch(this.state.location.pathname)
         }}>
           {/* this.props.children 的值有三种可能：如果当前组件没有子节点，它就是 undefined ;
           如果有一个子节点，数据类型是 object ；

@@ -13,12 +13,16 @@ export default class Route extends Component {
       //利用RouterContext.Consumer可以获得从App.js中的BrowserRouter.js中的RouterContxt.Provider传入的数据
       <RouterContext.Consumer>
         {context => {
-          const {path, children, component, render} = this.props;
+          const {path,computedMatch,children, component, render} = this.props;
           //使用window.location.pathname不太灵活，可以直接使用上下文中的location即context.location扩大兼容性
           //优先使用传入的location
           // const match = context.location.pathname === path;
           const location = this.props.location || context.location;
-          const match = matchPath(location.pathname, this.props);
+          const match = computedMatch
+            ? computedMatch
+            : path
+            ? matchPath(location.pathname, this.props)
+            : context.match;
           const props = {
             ...context,
             location,
@@ -27,6 +31,38 @@ export default class Route extends Component {
           console.log('newProps',props)
           //  children, component, render 能接收到(history, location match),
           // 所以我们定义在props，传下去
+
+          // match 渲染children, component, render 或者null
+          // match的时候如果children存在：function或者children本身
+          // 不match children 或者 null
+          // children是和匹配无关
+
+          //这里只是简单处理 ，所以呢 我们还是不要自己去创建element了，还是用createElement
+          // let element;
+          // if (match && component) {
+          //   console.log(
+          //     "component",
+          //     component,
+          //     React.isValidElement(component)
+          //   ); //sy-log
+          //   // 如果这里想要用cloneElement，首先得有个element
+          //   if (typeof component === "function") {
+          //     // class function
+          //     // 怎么判断class组件和function组件
+          //     if (component.prototype.isReactComponent) {
+          //       // class组件
+          //       const cmp = new component(component.props);
+          //       element = cmp.render();
+          //     } else {
+          //       //function组件
+          //       element = component(props);
+          //     }
+          //   } else {
+          //     // 对象
+          //     const cmp = new component.WrappedComponent({user: {}, ...props});
+          //     element = cmp.render();
+          //   }
+          // }
 
 
           // match的时候如果children存在：function或者children本身
