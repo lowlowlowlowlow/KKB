@@ -4,6 +4,14 @@ import {createBrowserHistory} from "history";
 import {RouterContext} from "./RouterContext";
 
 export default class BrowserRouter extends Component {
+  static computeRootMatch(pathname) {
+    return {
+      path: "/",
+      url: "/",
+      params: {},
+      isExact: pathname === "/"
+    };
+  }
   constructor(props) {
     super(props);
     this.history = createBrowserHistory();

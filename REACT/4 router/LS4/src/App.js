@@ -30,9 +30,18 @@ function App() {
           {/* <Route path="/user" component={UserPage} /> */}
           <Route path="/children" children={() => <div>children</div>} />
           <Route path="/search/:id" component={SearchComponent} />
+          {/* <Route path="/search/:id" children={(props) =>SearchComponent} />
+            如果route.js中的<RouterContext.Provider value={props}>不存在
+            则此处接收到props的只有SearchComponent，如果有多层嵌套，则更深层的组件就获取不到props
+            <RouterContext.Provider></RouterContext.Provider>配合hook.js
+            可以获取最接近该子元素的context          
+          */}
           <Route path="/render" render={() => <div>render</div>} />
           <PrivateRoute path="/user" component={UserPage} />
           <Route path="/login" component={LoginPage} />
+          {/* <PrivateRoute path="/user" component={UserPage} /> */}
+          {/* 如果Route没有path参数，将始终被匹配 */}
+          <Route render={() => <div>404</div>} />
         </Switch>
       </BrowserRouter>
     </div>
