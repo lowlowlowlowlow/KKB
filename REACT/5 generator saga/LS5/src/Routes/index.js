@@ -50,6 +50,20 @@ export default function Routes(props) {
         })}
         {/*<PrivateRoute path="/user" component={UserPage}></PrivateRoute>*/}
       </Switch>
+
+
+      {/*
+        <Route component={BasicLayout}>
+          <Switch>
+            <Route component={LoginPage}></Route>
+            <Route component={HomePage}></Route>
+          </Switch>
+        </Route>
+        这种情况是无法渲染BasicLayout的
+        因为此时<Switch></Switch>包裹的内容可以当作是<Route component={BasicLayout}>的children
+        由于children的优先级比component高，而且此处BasicLayout是使用component的形式来渲染
+        所以只会渲染<Switch></Switch>包裹的内容，而不会渲染BasicLayout
+      */}
     </Router>
   );
 }
